@@ -17,10 +17,18 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(auth -> auth
-      .requestMatchers("/css/**").permitAll()
-      .requestMatchers("/user/registration").permitAll()
-      .anyRequest().authenticated());
+    http.formLogin(login -> login
+        .loginPage("/login")
+        .loginProcessingUrl("/login")
+        .usernameParameter("username")
+        .passwordParameter("password")
+        .defaultSuccessUrl("/")
+        .failureUrl("/login?error")
+        .permitAll()
+      ).authorizeHttpRequests(auth -> auth
+        .requestMatchers("/css/**").permitAll()
+        .requestMatchers("/user/registration").permitAll()
+        .anyRequest().authenticated());
 
     return http.build();
   }

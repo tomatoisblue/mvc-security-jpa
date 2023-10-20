@@ -58,3 +58,8 @@ input[type="submit"]{
 .form__item > input[type="submit"]{
 	width: 100%;
 }
+
+.error-message{
+	color: red;
+	font-size: 16px;
+}
