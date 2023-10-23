@@ -22,6 +22,4 @@ public @interface UniqueUsername {
   String message() default "ユーザーネームは既に使用されています";
   Class<?>[] groups() default {};
   Class<? extends Payload>[] payload() default{};
-
-
 }

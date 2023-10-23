@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.mvcsecurityjpa.form.UserRegistrationForm;
+import com.example.mvcsecurityjpa.service.UserDeletionService;
 import com.example.mvcsecurityjpa.service.UserRegistrationService;
-import com.example.mvcsecurityjpa.userDetails.UserDetailsImpl;
 
 import jakarta.validation.Valid;
 
@@ -25,11 +25,15 @@ import jakarta.validation.Valid;
 public class AccountController {
 
   private UserRegistrationService userRegistrationService;
+  private UserDeletionService userDeletionService;
   private Logger log = LoggerFactory.getLogger(AccountController.class);
 
 
-  AccountController(UserRegistrationService userRegistrationService) {
+  AccountController(
+    UserRegistrationService userRegistrationService,
+    UserDeletionService userDeletionService) {
     this.userRegistrationService = userRegistrationService;
+    this.userDeletionService = userDeletionService;
   }
 
   @GetMapping("/")
@@ -39,27 +43,20 @@ public class AccountController {
 
   @GetMapping("/profile")
   public String showProfile(Model model) {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    if (auth != null && auth.getPrincipal() instanceof UserDetailsImpl) {
-      UserDetails user = (UserDetails) auth.getPrincipal();
-      if (user != null) {
-        model.addAttribute("username", user.getUsername());
-        System.out.println("Username : " + user.getUsername());
-      } else {
-        log.info("USER NOT FOUND");
-      }
-    }
+    UserDetails user = getAuthenticatedUserDetails();
+
+    model.addAttribute("username", user.getUsername());
     return "profile";
   }
 
   @GetMapping("/login")
   public String showLoginPage() {
-    return "login";
+    return redirectIfLoggedIn("redirect:/profile", "login");
   }
 
   @GetMapping("/user/registration")
   public String showUserRegistration(@ModelAttribute("form") UserRegistrationForm form) {
-    return "user-registration";
+    return redirectIfLoggedIn("redirect:/profile", "user-resistration");
   }
 
   @PostMapping("/user/registration")
@@ -70,5 +67,32 @@ public class AccountController {
     // Register the user to the database.
     userRegistrationService.userRegistration(form.getUsername(), form.getPassword());
     return "redirect:/login";
+  }
+
+  @PostMapping("/logout")
+  public String deleteUser() {
+    UserDetails user = getAuthenticatedUserDetails();
+    userDeletionService.deleteUser(user.getUsername());
+
+    return "redirect:/user/registration";
+  }
+
+  private boolean isLoggedIn() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null && auth.getPrincipal() instanceof UserDetails) {
+      return true;
+    }
+    return false;
+  }
+
+  private String redirectIfLoggedIn(String viewIfLoggedIn, String viewIfNotLoggedIn) {
+    if (isLoggedIn()) {
+      return viewIfLoggedIn;
+    }
+    return viewIfNotLoggedIn;
+  }
+
+  private static UserDetails getAuthenticatedUserDetails() {
+    return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
 }

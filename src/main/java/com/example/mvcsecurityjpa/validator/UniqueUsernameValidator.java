@@ -3,7 +3,7 @@ package com.example.mvcsecurityjpa.validator;
 import org.springframework.stereotype.Component;
 
 import com.example.mvcsecurityjpa.annotation.UniqueUsername;
-import com.example.mvcsecurityjpa.service.UserRegistrationService;
+import com.example.mvcsecurityjpa.service.UserServiceHelper;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -14,10 +14,10 @@ import jakarta.validation.ConstraintValidatorContext;
 @Component
 public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
 
-  private UserRegistrationService userRegistrationService;
+  private UserServiceHelper userServiceHelper;
 
-  public UniqueUsernameValidator(UserRegistrationService userRegistrationService) {
-    this.userRegistrationService = userRegistrationService;
+  public UniqueUsernameValidator(UserServiceHelper userServiceHelper) {
+    this.userServiceHelper = userServiceHelper;
   }
 
   @Override
@@ -26,6 +26,6 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
 
   @Override
   public boolean isValid(String username, ConstraintValidatorContext context) {
-    return username != null && !userRegistrationService.isUsernameExists(username);
+    return username != null && !userServiceHelper.isUsernameExists(username);
   }
 }

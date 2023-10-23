@@ -9,10 +9,11 @@
 <body>
     <main class="main">
       <div>
-        <ul>
-          <li>Username : <span th:text="${username}"></span></li>
-
-        </ul>
+        <h3>Username : <span th:text="${username}"></span></h3>
+        <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+          <input type="submit" />
+        </form>
+        <a href="javascript: document.logoutForm.submit()">ログアウト</a>
       </div>
     </main>
 </body>
