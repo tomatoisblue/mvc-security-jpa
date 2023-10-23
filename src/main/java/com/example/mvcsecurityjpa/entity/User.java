@@ -19,13 +19,13 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(name = "username", unique=true)
+  @Column(name = "username", unique = true, length = 25, nullable = false)
   private String username;
 
-  @Column(name = "password")
+  @Column(name = "password", length = 120, nullable = false)
   private String password;
 
-  @Column(name = "rolename")
+  @Column(name = "rolename", length = 20, nullable = false)
   private String rolename;
 
 
