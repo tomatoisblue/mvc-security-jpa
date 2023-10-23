@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>User Registration</title>
+    <title>ユーザー登録</title>
 </head>
 
 <body>
     <main class="main">
     	<form class="form" th:action="@{/user/registration}" method="post" th:object="${form}">
-    		<h1 class="form__title">User Registration</h1>
+    		<h1 class="form__title">ユーザー登録</h1>
         <p th:if="${#fields.hasErrors('passwordValid')}" th:errors="*{passwordValid}" class="error-message"></p>
     		<p class="form__item">
-    			<label for="username">Username</label>
+    			<label for="username">ユーザーネーム</label>
           <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></span>
-    			<input type="text" placeholder="Type Username" name="username" id="username">
+    			<input type="text" placeholder="your_username" name="username" id="username">
     		</p>
     		<p class="form__item">
-    			<label for="password">Password</label>
+    			<label for="password">パスワード</label>
           <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></span>
-    			<input type="password" placeholder="Type Password" name="password" id="password">
+    			<input type="password" placeholder="your_password" name="password" id="password">
     		</p>
     		<p class="form__item">
-    			<label for="confirm-password">Confirm Password</label>
+    			<label for="confirm-password">パスワード(確認)</label>
           <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{password}" class="error-message"></span>
-    			<input type="password" placeholder="Type Confirm Password" name="confirmPassword" id="confirm-password">
+    			<input type="password" placeholder="your_password" name="confirmPassword" id="confirm-password">
     		</p>
     		<p class="form__item">
-    			<input type="submit" value="User Registration">
+    			<input type="submit" value="登録">
     		</p>
     	</form>
     </main>

@@ -1,15 +1,21 @@
 package com.example.mvcsecurityjpa.form;
 
+import com.example.mvcsecurityjpa.annotation.UniqueUsername;
+
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+
 
 /**
  * UserRegistrationForm
  */
 public class UserRegistrationForm {
+
   @NotBlank
   @Size(min = 4, max = 20)
+  @UniqueUsername
   private String username;
 
   @NotBlank

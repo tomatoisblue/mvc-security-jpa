@@ -32,6 +32,12 @@ public class UserRegistrationService {
   }
 
 
+  public boolean isUsernameExists(String username) {
+    if (userRepository.findByUsername(username) != null) {
+      return true;
+    }
+    return false;
+  }
 
 
 }
