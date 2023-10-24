@@ -4,14 +4,13 @@ import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.mvcsecurityjpa.entity.User;
 
 /**
  * UserDetailsImpl
  */
-public class UserDetailsImpl implements UserDetails {
+public class UserDetailsImpl implements CustomUserDetails {
 
   private User user;
 
@@ -26,6 +25,16 @@ public class UserDetailsImpl implements UserDetails {
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return AuthorityUtils.createAuthorityList("ROLE_" + this.user.getRolename());
+  }
+
+  @Override
+  public Long getId() {
+    return user.getId();
+  }
+
+  @Override
+  public User getUser() {
+    return user;
   }
 
   @Override

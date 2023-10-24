@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>Login</title>
+    <title>ログイン</title>
 </head>
 
 <body>
     <main class="main">
     	<form class="form" th:action="@{/login}" method="post">
-    		<h1 class="form__title">Login</h1>
+    		<h1 class="form__title">ログイン</h1>
 				<div th:if="${param.error}">
 					<p th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}">
 						<span th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}"></span>
 					</p>
 				</div>
     		<p class="form__item">
-    			<label for="username">Username</label>
-    			<input type="text" placeholder="Type Your Username" name="username" id="username">
+    			<label for="email">メールアドレス</label>
+    			<input type="email" placeholder="your_email@example.com" name="email" id="email">
     		</p>
     		<p class="form__item">
     			<label for="password">Password</label>

@@ -1,4 +1,4 @@
-package com.example.mvcsecurityjpa.service;
+package com.example.mvcsecurityjpa.service.user;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,12 @@ public class UserRegistrationService {
     this.userRepository = userRepository;
   }
 
-  public void userRegistration(String username, String password) {
-    final String DEFAULT_ROLENAME = "GENERAL";
+  public void userRegistration(String username, String email, String password) {
 
     // Generate a hashed password by BCrypt
     String hashedPassword = passwordEncoder.encode(password);
     // Create a User object with the hashed password
-    User user = new User(username, hashedPassword, DEFAULT_ROLENAME);
+    User user = new User(username, email, hashedPassword);
     userRepository.saveAndFlush(user);
   }
 

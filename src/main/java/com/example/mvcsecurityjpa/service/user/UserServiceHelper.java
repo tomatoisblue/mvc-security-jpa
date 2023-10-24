@@ -1,4 +1,4 @@
-package com.example.mvcsecurityjpa.service;
+package com.example.mvcsecurityjpa.service.user;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,14 @@ public class UserServiceHelper {
     if (userRepository.findByUsername(username) != null) {
       return true;
     }
+    return false;
+  }
+
+  public boolean isEmailExists(String email) {
+    if (userRepository.findByEmail(email) != null) {
+      return true;
+    }
+
     return false;
   }
 

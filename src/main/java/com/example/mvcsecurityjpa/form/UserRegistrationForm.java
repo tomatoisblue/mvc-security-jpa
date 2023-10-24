@@ -1,8 +1,10 @@
 package com.example.mvcsecurityjpa.form;
 
+import com.example.mvcsecurityjpa.annotation.UniqueEmail;
 import com.example.mvcsecurityjpa.annotation.UniqueUsername;
 
 import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -19,6 +21,11 @@ public class UserRegistrationForm {
   @Pattern(regexp = "^[\\p{Alnum}-_]{4,20}$", message = "ユーザーネームには半角の英数字とアンダースコア(_)、ハイフン(-)が使用できます")
   @UniqueUsername
   private String username;
+
+  @NotBlank
+  @Email
+  @UniqueEmail
+  private String email;
 
   @NotBlank
   @Size(min = 8, max = 30)
@@ -47,6 +54,14 @@ public class UserRegistrationForm {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public String getPassword() {

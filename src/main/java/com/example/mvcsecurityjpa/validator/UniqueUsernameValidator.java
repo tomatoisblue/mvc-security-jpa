@@ -3,7 +3,7 @@ package com.example.mvcsecurityjpa.validator;
 import org.springframework.stereotype.Component;
 
 import com.example.mvcsecurityjpa.annotation.UniqueUsername;
-import com.example.mvcsecurityjpa.service.UserServiceHelper;
+import com.example.mvcsecurityjpa.service.user.UserServiceHelper;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

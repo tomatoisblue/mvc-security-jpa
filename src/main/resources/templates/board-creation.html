@@ -1,0 +1,24 @@
+<!-- <!DOCTYPE html> -->
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>ボード作成</title>
+</head>
+
+<body>
+    <main class="main">
+    	<form class="form" th:action="@{/board/new}" method="post" th:object="${form}">
+    		<h1 class="form__title">ボード作成</h1>
+    		<p class="form__item">
+    			<label for="title">タイトル</label>
+          <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-message"></span>
+    			<input type="text" placeholder="タイトルを入力してください" name="title" id="title">
+    		</p>
+    		<p class="form__item">
+    			<input type="submit" value="作成">
+    		</p>
+    	</form>
+    </main>
+</body>
+</html>

@@ -15,6 +15,23 @@
         </form>
         <a href="javascript: document.logoutForm.submit()">ログアウト</a>
       </div>
+      <a href="/board/new">ボード作成</a>
+      <h2>ボード一覧</h2>
+      <div class="boards">
+        <div th:if="${boards.size() == 0}">
+          <p>まだボードはありません</p>
+        </div>
+        <div th:if="${boards.size() > 0}">
+          <ul>
+            <li th:each="board : ${boards}">
+              <a th:href="@{'/boards/' + ${board.id}}"><span th:text="${board.title}"></a>
+
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
     </main>
 </body>
 </html>

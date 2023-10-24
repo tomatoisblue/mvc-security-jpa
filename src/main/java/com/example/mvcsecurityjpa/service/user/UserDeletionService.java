@@ -1,4 +1,4 @@
-package com.example.mvcsecurityjpa.service;
+package com.example.mvcsecurityjpa.service.user;
 
 import org.springframework.stereotype.Service;
 
