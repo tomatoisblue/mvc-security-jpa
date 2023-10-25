@@ -8,28 +8,29 @@
 
 <body>
     <main class="main">
-    	<form class="form" th:action="@{/user/registration}" method="post" th:object="${form}">
+    	<form class="form" th:action="@{/signup}" method="post" th:object="${form}">
     		<h1 class="form__title">ユーザー登録</h1>
+				<a href="/login">ログイン</a>
         <p th:if="${#fields.hasErrors('passwordValid')}" th:errors="*{passwordValid}" class="error-message"></p>
     		<p class="form__item">
     			<label for="username">ユーザーネーム</label>
           <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></span>
-    			<input type="text" placeholder="your_username" name="username" id="username">
+    			<input type="text" placeholder="your_username" th:value="${form.getUsername()}" name="username" id="username">
     		</p>
     		<p class="form__item">
     			<label for="email">メールアドレス</label>
           <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></span>
-    			<input type="email" placeholder="your_email@example.com" name="email" id="email">
+    			<input type="email" placeholder="your_email@example.com" th:value="${form.getEmail()}" name="email" id="email">
     		</p>
     		<p class="form__item">
     			<label for="password">パスワード</label>
           <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></span>
-    			<input type="password" placeholder="your_password" name="password" id="password">
+    			<input type="password" placeholder="your_password" th:value="${form.getPassword()}" name="password" id="password">
     		</p>
     		<p class="form__item">
     			<label for="confirm-password">パスワード(確認)</label>
           <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{password}" class="error-message"></span>
-    			<input type="password" placeholder="your_password" name="confirmPassword" id="confirm-password">
+    			<input type="password" placeholder="your_password" th:value="${form.getConfirmPassword()}" name="confirmPassword" id="confirm-password">
     		</p>
     		<p class="form__item">
     			<input type="submit" value="登録">

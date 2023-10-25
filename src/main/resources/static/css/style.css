@@ -49,7 +49,7 @@ input[type="submit"]{
 	font-weight: bold;
 }
 
-.form__item > input[type="text"], .form__item > input[type="password"]{
+.form__item > input[type="text"], .form__item > input[type="password"], .form__item > input[type="email"], .form__item > input[type="url"] {
 	width: 100%;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	line-height: 40px;
@@ -62,4 +62,8 @@ input[type="submit"]{
 .error-message{
 	color: red;
 	font-size: 16px;
+}
+
+.multiline{
+	white-space: pre-wrap;
 }

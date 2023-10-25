@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title th:text="${board.getTitle()}"></title>
+</head>
+
+<body>
+    <main class="main">
+        <div>
+        <h3>ボード名 : <span th:text="${board.getTitle()}"></span></h3>
+        <a th:href="@{'/boards/' + ${board.id} + '/edit'}"><span>ボードのタイトルを変更</span></a>
+        <form th:action="@{'/boards/' + ${board.id} + '/delete'}" method="post" th:hidden="true" name="deleteBoard">
+            <input type="submit" />
+        </form>
+        <a href="javascript: document.deleteBoard.submit()">ボードを削除</a>
+        <div>
+            <a th:href="@{'/tasks/' + ${board.id} + '/new'}">新規タスク</a>
+            <li th:each="task : ${tasks}">
+              <a th:href="@{'/tasks/' + ${task.id}}"><span th:text="${task.title}"></a>
+              <!-- <a th:href="@{'/tasks/' + ${task.id} + '/edit'}"><span>編集</span></a> -->
+            </li>
+        </div>
+    </main>
+</body>
+</html>

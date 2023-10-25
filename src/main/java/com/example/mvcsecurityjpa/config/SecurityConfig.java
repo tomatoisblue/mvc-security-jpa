@@ -24,14 +24,14 @@ public class SecurityConfig {
           .loginProcessingUrl("/login")
           .usernameParameter("email")
           .passwordParameter("password")
-          .defaultSuccessUrl("/profile")
+          .defaultSuccessUrl("/boards")
           .failureUrl("/login?error")
           .permitAll())
         .logout(logout -> logout
           .logoutUrl("/logout")
           .logoutSuccessUrl("/login"))
         .authorizeHttpRequests(auth -> auth
-          .requestMatchers("/css/**", "/user/registration").permitAll()
+          .requestMatchers("/css/**", "/signup", "/error").permitAll()
           .anyRequest().authenticated());
 
     return http.build();

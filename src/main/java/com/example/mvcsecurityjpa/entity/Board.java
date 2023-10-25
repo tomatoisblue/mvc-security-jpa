@@ -78,6 +78,14 @@ public class Board {
     this.user = user;
   }
 
+  public boolean isTasksExist() {
+    if (tasks.size() > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
   // update updatedOn
   private void setUpdatedOn() {
     this.updatedOn = Instant.now();

@@ -20,12 +20,17 @@
       <div class="boards">
         <div th:if="${boards.size() == 0}">
           <p>まだボードはありません</p>
+          <a href="/board/new">作成する</a>
         </div>
         <div th:if="${boards.size() > 0}">
           <ul>
             <li th:each="board : ${boards}">
               <a th:href="@{'/boards/' + ${board.id}}"><span th:text="${board.title}"></a>
-
+              <a th:href="@{'/boards/' + ${board.id} + '/edit'}"><span>編集</span></a>
+              <form th:action="@{'/boards/' + ${board.id} + '/delete'}" method="post" th:hidden="true" name="deleteBoard">
+                <input type="submit" />
+              </form>
+              <a href="javascript: document.deleteBoard.submit()">削除</a>
             </li>
           </ul>
 

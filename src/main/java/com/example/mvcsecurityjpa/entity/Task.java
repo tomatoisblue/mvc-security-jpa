@@ -46,7 +46,7 @@ public class Task {
   private LocalDate expirationDate;
 
   @Lob
-  @Column(name = "link", length = 512, nullable = true)
+  @Column(name = "url", length = 512, nullable = true)
   private String url;
 
   @ManyToOne

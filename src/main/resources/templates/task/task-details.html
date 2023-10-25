@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title th:text="${task.getTitle()}"></title>
+</head>
+
+<body>
+    <main class="main">
+        <a th:href="@{'/boards/' + ${task.getBoard().getId()}}"><span>ボードに戻る</span></a>
+        <div>
+            <h3>タスク : <span th:text="${task.getTitle()}"></span></h3>
+            <p>ステータス : <span th:text="${task.getStatus()}"></span></p>
+            <div th:if="${task.getDescription().length > 0}">詳細 : <div th:text="${task.getDescription()}" class="multiline"></div></div>
+            <p th:if="${task.getExpirationDate() != null}">期限 : <span th:text="${task.getExpirationDate().toString()}"></span></p>
+            <p th:if="${task.getUrl().length > 0}">URL : <span th:text="${task.getUrl()}"></span></p>
+        </div>
+    </main>
+</body>
+</html>

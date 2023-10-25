@@ -16,7 +16,6 @@ import jakarta.validation.constraints.Size;
  */
 public class UserRegistrationForm {
 
-  @NotBlank
   @Size(min = 4, max = 20)
   @Pattern(regexp = "^[\\p{Alnum}-_]{4,20}$", message = "ユーザーネームには半角の英数字とアンダースコア(_)、ハイフン(-)が使用できます")
   @UniqueUsername
@@ -27,13 +26,11 @@ public class UserRegistrationForm {
   @UniqueEmail
   private String email;
 
-  @NotBlank
   @Size(min = 8, max = 30)
   @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,30}$", message = "パスワードには英小文字、英大文字、数字、記号から最低1つずつ使用してください")
   private String password;
 
   @NotBlank
-  @Size(min = 8, max = 30)
   private String confirmPassword;
 
   @AssertTrue
