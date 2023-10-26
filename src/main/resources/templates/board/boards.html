@@ -129,11 +129,16 @@
                             <li th:each="board : ${boards}" class="list-group-item d-flex justify-content-between align-items-center">
                                 <a th:href="@{'/boards/' + ${board.id}}" th:text="${board.title}"></a>
                                 <div>
-                                    <a th:href="@{'/boards/' + ${board.id} + '/edit'}" class="btn btn-warning">編集</a>
+                                    <!-- <a th:href="@{'/boards/' + ${board.id} + '/edit'}" class="btn btn-warning">編集</a>
                                     <form th:action="@{'/boards/' + ${board.id} + '/delete'}" method="post" th:hidden="true" name="deleteBoard">
                                         <input type="submit" class="btn btn-danger" value="削除" />
                                     </form>
-                                    <a href="javascript: document.deleteBoard.submit()" class="btn btn-danger">削除</a>
+                                    <a href="javascript: document.deleteBoard.submit()" class="btn btn-danger">削除</a> -->
+
+                                    <a th:href="@{'/boards/' + ${board.id} + '/edit'}" class="btn btn-warning">編集</a>
+                                    <form th:action="@{'/boards/' + ${board.id} + '/delete'}" method="post"  name="deleteBoard">
+                                        <input type="submit" class="btn btn-danger" value="削除" />
+                                    </form>
                                 </div>
                             </li>
                         </ul>

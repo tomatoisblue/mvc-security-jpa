@@ -34,10 +34,16 @@
                                         <span th:text="${task.title}"></span>
                                     </a>
                                     <div class="float-right">
-                                        <a th:href="@{'/tasks/' + ${task.id} + '/edit'}">編集</a>
-                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post">
-                                            <input type="submit" value="削除"/>
+                                        <a th:href="@{'/tasks/' + ${task.id} + '/edit'}" class="btn btn-warning">編集</a>
+                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post"  name="deleteTask">
+                                            <input type="submit" class="btn btn-danger" value="削除" />
                                         </form>
+
+                                        <!-- <a th:href="@{'/tasks/' + ${task.id} + '/edit'}" class="btn btn-warning">編集</a>
+                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post" th:hidden="true" name="deleteTask">
+                                            <input type="submit" class="btn btn-danger" value="削除" />
+                                        </form>
+                                        <a href="javascript: document.deleteTask.submit()" class="btn btn-danger">削除</a> -->
                                     </div>
                                 </div>
                             </td>
@@ -60,10 +66,15 @@
                                         <span th:text="${task.title}"></span>
                                     </a>
                                     <div class="float-right">
-                                        <a th:href="@{'/tasks/' + ${task.id} + '/edit'}">編集</a>
-                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post">
-                                            <input type="submit" value="削除"/>
+                                        <a th:href="@{'/tasks/' + ${task.id} + '/edit'}" class="btn btn-warning">編集</a>
+                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post"  name="deleteTask">
+                                            <input type="submit" class="btn btn-danger" value="削除" />
                                         </form>
+                                        <!-- <a th:href="@{'/tasks/' + ${task.id} + '/edit'}" class="btn btn-warning">編集</a>
+                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post" th:hidden="true" name="deleteTask">
+                                            <input type="submit" class="btn btn-danger" value="削除" />
+                                        </form>
+                                        <a href="javascript: document.deleteTask.submit()" class="btn btn-danger">削除</a> -->
                                     </div>
                                 </div>
                             </td>
@@ -86,10 +97,15 @@
                                         <span th:text="${task.title}"></span>
                                     </a>
                                     <div class="float-right">
-                                        <a th:href="@{'/tasks/' + ${task.id} + '/edit'}">編集</a>
-                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post">
-                                            <input type="submit" value="削除"/>
+                                        <a th:href="@{'/tasks/' + ${task.id} + '/edit'}" class="btn btn-warning">編集</a>
+                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post"  name="deleteTask">
+                                            <input type="submit" class="btn btn-danger" value="削除" />
                                         </form>
+                                        <!-- <a th:href="@{'/tasks/' + ${task.id} + '/edit'}" class="btn btn-warning">編集</a>
+                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post" th:hidden="true" name="deleteTask">
+                                            <input type="submit" class="btn btn-danger" value="削除" />
+                                        </form>
+                                        <a href="javascript: document.deleteTask.submit()" class="btn btn-danger">削除</a> -->
                                     </div>
                                 </div>
                             </td>
