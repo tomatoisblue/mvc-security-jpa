@@ -11,7 +11,8 @@ import jakarta.validation.constraints.Size;
 /**
  * TaskForm
  */
-public class TaskForm {
+public class TaskEditForm {
+  private Long id;
   private Long boardId;
   private Long userId;
 
@@ -28,10 +29,22 @@ public class TaskForm {
   @Size(max = 512)
   private String url;
 
+  @Override
+  public String toString(){
+    return String.format("id: %d\ntitle: %s\nstatus: %s\nboardId: %d", id, title, status, boardId);
+  }
 
   /*
    * Getters and Setters
    */
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 
   public String getTitle() {
     return title;
@@ -88,6 +101,13 @@ public class TaskForm {
 
   public void setUserId(Long userId) {
     this.userId = userId;
+  }
+
+  public boolean isStatusSelected(Status status) {
+    if(this.status == status) {
+      return true;
+    }
+    return false;
   }
 
 }

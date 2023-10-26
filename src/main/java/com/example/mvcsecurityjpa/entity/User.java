@@ -1,15 +1,19 @@
 package com.example.mvcsecurityjpa.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -42,8 +46,11 @@ public class User {
   private String rolename;
 
   // has many tables
-  @OneToMany(mappedBy = "user")
-  private Set<Board> boards;
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<Board> boards;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<Task> tasks;
 
   @CreationTimestamp
   @Column(name = "created_on", nullable = false)

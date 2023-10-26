@@ -26,7 +26,7 @@
     		<p class="form__item">
     			<label for="description">詳細</label>
           <!-- <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-message"></span> -->
-					<textarea placeholder="詳細を記入" th:value="${form.getDescription()}" name="description" id="description"></textarea>
+					<textarea rows="6" cols="40" placeholder="詳細を記入" th:value="${form.getDescription()}" name="description" id="description"></textarea>
     		</p>
     		<p class="form__item">
     			<label for="expirationDate">期限</label>

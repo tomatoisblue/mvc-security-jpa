@@ -1,24 +1,18 @@
 package com.example.mvcsecurityjpa.controller;
 
-import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.mvcsecurityjpa.entity.Board;
 import com.example.mvcsecurityjpa.form.UserRegistrationForm;
-import com.example.mvcsecurityjpa.service.board.BoardService;
+import com.example.mvcsecurityjpa.helper.AuthenticationHelper;
 import com.example.mvcsecurityjpa.service.user.UserDeletionService;
 import com.example.mvcsecurityjpa.service.user.UserRegistrationService;
-import com.example.mvcsecurityjpa.userDetails.CustomUserDetails;
 
 import jakarta.validation.Valid;
 
@@ -45,7 +39,7 @@ public class UserController {
 
   @GetMapping("/")
   public String showTop() {
-    return "index";
+    return "redirect:/boards";
   }
 
 

@@ -14,5 +14,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
   public List<Task> findAllByBoardId(Long boardId);
 
+  // public void deleteAllByBoardIdInBatch(Long boardId);
 
 }

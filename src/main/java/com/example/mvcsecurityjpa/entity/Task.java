@@ -53,6 +53,10 @@ public class Task {
   @JoinColumn(name = "board_id", nullable = false)
   private Board board;
 
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
+
   @CreationTimestamp
   @Column(name = "created_on")
   private Instant createdOn;
@@ -113,5 +117,13 @@ public class Task {
 
   public void setBoard(Board board) {
     this.board = board;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 }

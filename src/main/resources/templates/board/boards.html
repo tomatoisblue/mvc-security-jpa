@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -37,6 +37,110 @@
         </div>
 
       </div>
+    </main>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Profile</title>
+</head>
+
+<body>
+    <main class="main container">
+        <div class="row">
+            <div class="col">
+                <h3>Username : <span th:text="${username}"></span></h3>
+                <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+                    <input type="submit" class="btn btn-danger" value="ログアウト" />
+                </form>
+                <a class="btn btn-danger" href="javascript: document.logoutForm.submit()">ログアウト</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a href="/board/new" class="btn btn-success">ボード作成</a>
+                <h2>ボード一覧</h2>
+                <div class="boards">
+                    <div th:if="${boards.size() == 0}">
+                        <p>まだボードはありません</p>
+                        <a href="/board/new" class="btn btn-primary">作成する</a>
+                    </div>
+                    <div th:if="${boards.size() > 0}">
+                        <ul class="list-group">
+                            <li th:each="board : ${boards}" class="list-group-item d-flex justify-content-between align-items-center">
+                                <a th:href="@{'/boards/' + ${board.id}}" th:text="${board.title}" style="font-size: 20px"></a>
+                                <a th:href="@{'/boards/' + ${board.id} + '/edit'}" class="btn btn-warning">編集</a>
+                                <form th:action="@{'/boards/' + ${board.id} + '/delete'}" method="post" th:hidden="true" name="deleteBoard">
+                                    <input type="submit" class="btn btn-danger" value="削除" />
+                                </form>
+                                <a href="javascript: document.deleteBoard.submit()" class="btn btn-danger">削除</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+
+-->
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- Bootstrap CSSを読み込む -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Profile</title>
+</head>
+
+<body>
+    <main class="main container">
+        <div class="row">
+            <div class="col-2 text-left">
+                <h3><span th:text="${username}"></span></h3>
+            </div>
+            <div class="col-8 text-center">
+                  <h2>ボード一覧</h2>
+            </div>
+            <div class="col-2 text-right">
+                <a href="/board/new" class="btn btn-success">ボード作成</a>
+                <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+                    <input type="submit" class="btn btn-danger" value="ログアウト" />
+                </form>
+                <a class="btn btn-danger" href="javascript: document.logoutForm.submit()">ログアウト</a>
+            </div>
+        </div>
+        <div class="row w-75 center-block">
+            <div class="col-12">
+                <div class="boards">
+                    <div th:if="${boards.size() == 0}">
+                        <p>まだボードはありません</p>
+                        <a href="/board/new" class="btn btn-primary">作成する</a>
+                    </div>
+                    <div th:if="${boards.size() > 0}">
+                        <ul class="list-group">
+                            <li th:each="board : ${boards}" class="list-group-item d-flex justify-content-between align-items-center">
+                                <a th:href="@{'/boards/' + ${board.id}}" th:text="${board.title}"></a>
+                                <div>
+                                    <a th:href="@{'/boards/' + ${board.id} + '/edit'}" class="btn btn-warning">編集</a>
+                                    <form th:action="@{'/boards/' + ${board.id} + '/delete'}" method="post" th:hidden="true" name="deleteBoard">
+                                        <input type="submit" class="btn btn-danger" value="削除" />
+                                    </form>
+                                    <a href="javascript: document.deleteBoard.submit()" class="btn btn-danger">削除</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 </html>

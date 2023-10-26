@@ -3,25 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
     <title th:text="${board.getTitle()}"></title>
 </head>
-
 <body>
-    <main class="main">
-        <div>
-        <h3>ボード名 : <span th:text="${board.getTitle()}"></span></h3>
-        <a th:href="@{'/boards/' + ${board.id} + '/edit'}"><span>ボードのタイトルを変更</span></a>
-        <form th:action="@{'/boards/' + ${board.id} + '/delete'}" method="post" th:hidden="true" name="deleteBoard">
-            <input type="submit" />
-        </form>
-        <a href="javascript: document.deleteBoard.submit()">ボードを削除</a>
-        <div>
+    <div class="container">
+        <div class="board-header">
+            <h3><span th:text="${board.title}"></span></h3>
+            <a href="/boards"><span>ボード一覧</span></a> /
+            <a th:href="@{'/boards/' + ${board.id} + '/edit'}"><span>ボードのタイトルを変更</span></a> /
+            <form th:action="@{'/boards/' + ${board.id} + '/delete'}" method="post" th:hidden="true" name="deleteBoard">
+                <input type="submit" />
+            </form>
+            <a href="javascript: document.deleteBoard.submit()">ボードを削除</a> /
             <a th:href="@{'/tasks/' + ${board.id} + '/new'}">新規タスク</a>
-            <li th:each="task : ${tasks}">
-              <a th:href="@{'/tasks/' + ${task.id}}"><span th:text="${task.title}"></a>
-              <!-- <a th:href="@{'/tasks/' + ${task.id} + '/edit'}"><span>編集</span></a> -->
-            </li>
         </div>
-    </main>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><h3>ToDo</h3></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="task : ${todoTasks}">
+                            <td>
+                                <div>
+                                    <a th:href="@{'/tasks/' + ${task.id}}">
+                                        <span th:text="${task.title}"></span>
+                                    </a>
+                                    <div class="float-right">
+                                        <a th:href="@{'/tasks/' + ${task.id} + '/edit'}">編集</a>
+                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post">
+                                            <input type="submit" value="削除"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><h3>InProgress</h3></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="task : ${inProgressTasks}">
+                            <td>
+                                <div>
+                                    <a th:href="@{'/tasks/' + ${task.id}}">
+                                        <span th:text="${task.title}"></span>
+                                    </a>
+                                    <div class="float-right">
+                                        <a th:href="@{'/tasks/' + ${task.id} + '/edit'}">編集</a>
+                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post">
+                                            <input type="submit" value="削除"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><h3>Done</h3></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="task : ${doneTasks}">
+                            <td>
+                                <div>
+                                    <a th:href="@{'/tasks/' + ${task.id}}">
+                                        <span th:text="${task.title}"></span>
+                                    </a>
+                                    <div class="float-right">
+                                        <a th:href="@{'/tasks/' + ${task.id} + '/edit'}">編集</a>
+                                        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post">
+                                            <input type="submit" value="削除"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

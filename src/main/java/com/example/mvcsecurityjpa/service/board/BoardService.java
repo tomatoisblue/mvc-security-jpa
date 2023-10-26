@@ -16,13 +16,10 @@ import com.example.mvcsecurityjpa.service.task.TaskService;
  */
 @Service
 public class BoardService {
-  private final BoardRepository boardRepository;
-  private final TaskService taskService;
+  private BoardRepository boardRepository;
 
-  public BoardService(BoardRepository boardRepository,
-                      TaskService taskService) {
+  public BoardService(BoardRepository boardRepository) {
     this.boardRepository = boardRepository;
-    this.taskService = taskService;
   }
 
   public Board save(BoardForm form) {
@@ -42,13 +39,13 @@ public class BoardService {
     return boardRepository.save(board);
   }
 
-  public Board findById(Long id) {
-    Optional<Board> optionalBoard = boardRepository.findById(id);
-    if(optionalBoard.isPresent()) {
-      return optionalBoard.get();
-    }
-    return null;
-  }
+  // public Board findByBoardId(Long boardId) {
+  //   Optional<Board> optionalBoard = boardRepository.findById(boardId);
+  //   if(optionalBoard.isPresent()) {
+  //     return optionalBoard.get();
+  //   }
+  //   return null;
+  // }
 
   public List<Board> findAllByUserId(Long id) {
     return boardRepository.findAllByUserId(id);
@@ -56,25 +53,26 @@ public class BoardService {
 
 
   public void changeTitle(BoardEditForm form) {
-    Board board = findById(form.getId());
-    if (board == null) {
+    Optional<Board> optionalBoard = boardRepository.findById(form.getId());
+    if (optionalBoard.isEmpty()) {
       return;
     }
 
+    Board board = optionalBoard.get();
     board.setTitle(form.getTitle());
     boardRepository.save(board);
   }
 
   public void deleteBoard(Long boardId) {
-    Board board = findById(boardId);
-    if (board == null) {
+    Optional<Board> optionalBoard = boardRepository.findById(boardId);
+    if (optionalBoard.isEmpty()) {
       return;
     }
 
-    if (board.isTasksExist()) {
-      taskService.deleteAllByBoardId(boardId);
-    }
+    // if (board.isTasksExist()) {
+    //   taskService.deleteAllByBoardId(boardId);
+    // }
 
-    boardRepository.delete(board);
+    boardRepository.delete(optionalBoard.get());
   }
 }

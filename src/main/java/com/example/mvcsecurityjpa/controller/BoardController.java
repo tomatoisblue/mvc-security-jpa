@@ -1,6 +1,7 @@
 package com.example.mvcsecurityjpa.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +14,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.mvcsecurityjpa.entity.Board;
 import com.example.mvcsecurityjpa.entity.Task;
+import com.example.mvcsecurityjpa.enums.Status;
 import com.example.mvcsecurityjpa.form.BoardEditForm;
 import com.example.mvcsecurityjpa.form.BoardForm;
+import com.example.mvcsecurityjpa.service.board.BoardFindService;
 import com.example.mvcsecurityjpa.service.board.BoardService;
 import com.example.mvcsecurityjpa.service.task.TaskService;
 import com.example.mvcsecurityjpa.userDetails.CustomUserDetails;
+import com.example.mvcsecurityjpa.helper.AuthenticationHelper;
+import com.example.mvcsecurityjpa.helper.BoardPermissionHelper;
 
 import jakarta.validation.Valid;
 
@@ -27,15 +32,21 @@ import jakarta.validation.Valid;
 @Controller
 public class BoardController {
   private BoardService boardService;
+  private BoardFindService boardFindService;
   private TaskService taskService;
   private AuthenticationHelper authenticationHelper;
+  private BoardPermissionHelper boardPermissionHelper;
 
   BoardController(BoardService boardService,
+                  BoardFindService boardFindService,
                   TaskService taskService,
-                  AuthenticationHelper authenticationHelper) {
+                  AuthenticationHelper authenticationHelper,
+                  BoardPermissionHelper boardPermissionHelper) {
     this.boardService = boardService;
+    this.boardFindService = boardFindService;
     this.taskService = taskService;
     this.authenticationHelper = authenticationHelper;
+    this.boardPermissionHelper = boardPermissionHelper;
   }
 
   @GetMapping("/boards")
@@ -52,14 +63,21 @@ public class BoardController {
 
   @GetMapping("/boards/{id}")
   public String showBoardDetails(@PathVariable Long id, Model model) {
-    Board board = boardService.findById(id);
+    System.out.println("show board details method in board controller");
+    if (!boardPermissionHelper.isOwner(id)) {
+      return "redirect:/boards";
+    }
+
+    Board board = boardFindService.findByBoardId(id);
     if (board == null) {
       return "redirect:/boards";
     }
-    List<Task> tasks = taskService.findAllByBoardId(id);
-
+    Map<Status, List<Task>> tasks = taskService.groupByStatus(taskService.findAllByBoardId(id));
     model.addAttribute("board", board);
-    model.addAttribute("tasks", tasks);
+    model.addAttribute("todoTasks", tasks.get(Status.TODO));
+    model.addAttribute("inProgressTasks", tasks.get(Status.IN_PROGRESS));
+    model.addAttribute("doneTasks", tasks.get(Status.DONE));
+
     return "board/board-details";
   }
 
@@ -71,9 +89,8 @@ public class BoardController {
 
   @PostMapping("/board/new")
   public String createBoard(@Valid @ModelAttribute("form") BoardForm form, RedirectAttributes redirectAttributes) {
-    CustomUserDetails userDetails = authenticationHelper.getAuthenticatedUserDetails();
 
-    form.setUser(userDetails.getUser());
+    form.setUser(authenticationHelper.getCurrentUser());
     Long boardId = boardService.save(form).getId();
 
     // redirect to board details page based on id
@@ -84,7 +101,11 @@ public class BoardController {
 
   @GetMapping("/boards/{id}/edit")
   public String showBoardEdit(@ModelAttribute BoardEditForm form, @PathVariable("id") Long id, Model model) {
-    Board board = boardService.findById(id);
+    if (!boardPermissionHelper.isOwner(id)) {
+      return "redirect:/boards";
+    }
+
+    Board board = boardFindService.findByBoardId(id);
     if (board == null) {
       return "redirect:/boards";
     }

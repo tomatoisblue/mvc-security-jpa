@@ -67,3 +67,7 @@ input[type="submit"]{
 .multiline{
 	white-space: pre-wrap;
 }
+
+.board-header h3{
+	text-align: center;
+}
