@@ -1,0 +1,20 @@
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Flowzen</a>
+    <div class="navbar-nav ml-auto">
+        <div sec:authorize="isAnonymous()">
+            <a class="nav-item nav-link" href="/login">Login</a>
+        </div>
+        <div sec:authorize="isAuthenticated()" class="d-flex">
+            <form action="/search" method="get" class="form-inline ml-3">
+                <input class="form-control" type="text" name="query" placeholder="ユーザー検索">
+                <button class="btn btn-outline-success" type="submit">検索</button>
+            </form>
+            <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+                <input type="submit" class="btn btn-danger" value="ログアウト" />
+            </form>
+            <a class="btn btn-danger" href="javascript: document.logoutForm.submit()">ログアウト</a>
+        </div>
+    </div>
+</header>

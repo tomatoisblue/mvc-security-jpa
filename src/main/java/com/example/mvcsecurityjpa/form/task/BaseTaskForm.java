@@ -1,4 +1,4 @@
-package com.example.mvcsecurityjpa.form;
+package com.example.mvcsecurityjpa.form.task;
 
 import java.time.LocalDate;
 
@@ -9,10 +9,9 @@ import jakarta.validation.constraints.Size;
 
 
 /**
- * TaskForm
+ * BaseTaskForm
  */
-public class TaskEditForm {
-  private Long id;
+public class BaseTaskForm {
   private Long boardId;
   private Long userId;
 
@@ -29,28 +28,22 @@ public class TaskEditForm {
   @Size(max = 512)
   private String url;
 
-  @Override
-  public String toString(){
-    return String.format("id: %d\ntitle: %s\nstatus: %s\nboardId: %d", id, title, status, boardId);
-  }
 
   /*
    * Getters and Setters
    */
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public String getTitle() {
+    if (title != null){
+      title.strip();
+    }
     return title;
   }
 
   public void setTitle(String title) {
+    if (title != null){
+      title.strip();
+    }
     this.title = title;
   }
 
@@ -80,10 +73,16 @@ public class TaskEditForm {
   }
 
   public String getUrl() {
+    if (url != null){
+      url.strip();
+    }
     return url;
   }
 
   public void setUrl(String url) {
+    if (url != null){
+      url.strip();
+    }
     this.url = url;
   }
 
@@ -104,10 +103,10 @@ public class TaskEditForm {
   }
 
   public boolean isStatusSelected(Status status) {
-    if(this.status == status) {
-      return true;
+    if(this.status != status) {
+      return false;
     }
-    return false;
+    return true;
   }
 
 }

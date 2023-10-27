@@ -1,17 +1,16 @@
-<!-- <!DOCTYPE html> -->
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>タスク編集</title>
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="common/head :: head-content">
+		<title>タスク編集</title>
 </head>
-
 <body>
+    <header th:replace="common/header :: header"></header>
     <main class="main">
 			<h1 class="form__title">タスク編集</h1>
 			<a th:href="@{/boards/} + ${form.getBoardId()}">ボードに戻る</a>
-    	<form class="form" th:action="@{/tasks/} + ${form.getId()} + '/edit'" method="post" th:object="${form}">
-				<input type="hidden" th:value="${form.getId()}" name="id">
+    	<form class="form" th:action="@{/tasks/} + ${form.getTaskId()} + '/edit'" method="post" th:object="${form}">
+				<input type="hidden" th:value="${form.getTaskId()}" name="id">
 				<input type="hidden" th:value="${form.getBoardId()}" name="boardId">
     		<p class="form__item">
     			<label for="title">タイトル</label>

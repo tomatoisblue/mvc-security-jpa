@@ -18,20 +18,17 @@ public class UserServiceHelper {
     this.userRepository = userRepository;
   }
 
-  public boolean isUsernameExists(String username) {
-    if (userRepository.findByUsername(username) != null) {
-      return true;
+  public boolean usernameExists(String username) {
+    if (userRepository.findByUsername(username) == null) {
+      return false;
     }
-    return false;
+    return true;
   }
 
-  public boolean isEmailExists(String email) {
-    if (userRepository.findByEmail(email) != null) {
-      return true;
+  public boolean emailExists(String email) {
+    if (userRepository.findByEmail(email) == null) {
+      return false;
     }
-
-    return false;
+    return true;
   }
-
-
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<head th:replace="common/head :: head-content">
+    <title text="ユーザー検索"></title>
+</head>
+<body>
+    <header th:replace="common/header :: header"></header>
+    <div class="container">
+        <h1>検索結果</h1>
+        <div class="row">
+            <div class="col">
+                <ul th:if="${userList}" th:each="user : ${userList}">
+                    <li th:text="${user.username}"></li>
+                </ul>
+                <!-- Handle no results case -->
+                <div th:unless="${userList}">
+                    <p>No results found.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

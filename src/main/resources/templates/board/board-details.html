@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="common/head :: head-content">
     <title th:text="${board.getTitle()}"></title>
 </head>
 <body>
+    <header th:replace="common/header :: header"></header>
     <div class="container">
         <div class="board-header">
             <h3><span th:text="${board.title}"></span></h3>

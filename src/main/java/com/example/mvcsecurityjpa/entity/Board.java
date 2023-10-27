@@ -68,7 +68,6 @@ public class Board {
   }
 
   public void setTitle(String title) {
-    setUpdatedOn();
     this.title = title;
   }
 
@@ -89,8 +88,8 @@ public class Board {
   }
 
   // update updatedOn
-  private void setUpdatedOn() {
-    this.updatedOn = Instant.now();
-  }
+  // private void setUpdatedOn() {
+  //   this.updatedOn = Instant.now();
+  // }
 
 }

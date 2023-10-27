@@ -29,7 +29,6 @@ public class AuthenticationHelper {
     return (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
 
-
   public String redirectIfLoggedIn(String viewIfLoggedIn, String viewIfNotLoggedIn) {
     if (isLoggedIn()) {
       return viewIfLoggedIn;
@@ -43,5 +42,9 @@ public class AuthenticationHelper {
       return true;
     }
     return false;
+  }
+
+  public void logout(Long userId) {
+    
   }
 }

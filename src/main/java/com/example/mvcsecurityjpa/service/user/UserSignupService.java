@@ -11,32 +11,26 @@ import com.example.mvcsecurityjpa.repository.UserRepository;
  * UserRegistrationService
  */
 @Service
-public class UserRegistrationService {
+public class UserSignupService {
 
   private PasswordEncoder passwordEncoder;
   private UserRepository userRepository;
 
-  public UserRegistrationService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+  public UserSignupService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
   }
 
-  public void userRegistration(String username, String email, String password) {
+  public void signup(String username, String email, String password) throws Exception {
 
     // Generate a hashed password by BCrypt
     String hashedPassword = passwordEncoder.encode(password);
     // Create a User object with the hashed password
-    User user = new User(username, email, hashedPassword);
-    userRepository.saveAndFlush(user);
-  }
-
-
-  public boolean isUsernameExists(String username) {
-    if (userRepository.findByUsername(username) != null) {
-      return true;
+    try {
+      User user = new User(username, email, hashedPassword);
+      userRepository.saveAndFlush(user);
+    } catch (Exception e) {
+      throw e;
     }
-    return false;
   }
-
-
 }

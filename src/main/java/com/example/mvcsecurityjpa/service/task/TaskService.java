@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import com.example.mvcsecurityjpa.entity.Board;
 import com.example.mvcsecurityjpa.entity.Task;
 import com.example.mvcsecurityjpa.enums.Status;
-import com.example.mvcsecurityjpa.form.TaskEditForm;
-import com.example.mvcsecurityjpa.form.TaskForm;
+import com.example.mvcsecurityjpa.form.task.TaskEditForm;
+import com.example.mvcsecurityjpa.form.task.TaskCreationForm;
 import com.example.mvcsecurityjpa.helper.AuthenticationHelper;
 import com.example.mvcsecurityjpa.repository.TaskRepository;
 import com.example.mvcsecurityjpa.service.board.BoardFindService;
@@ -34,7 +34,7 @@ public class TaskService {
     this.authenticationHelper = authenticationHelper;
   }
 
-  public Long save(TaskForm form) {
+  public Long save(TaskCreationForm form) {
     Board board = boardFindService.findByBoardId(form.getBoardId());
 
     if (board == null) {
@@ -74,7 +74,7 @@ public class TaskService {
   }
 
   public Task update(TaskEditForm form) {
-    Optional<Task> optionalTask = taskRepository.findById(form.getId());
+    Optional<Task> optionalTask = taskRepository.findById(form.getTaskId());
     if (optionalTask.isEmpty()) {
       System.out.println("task not found");
       return null;
@@ -87,8 +87,6 @@ public class TaskService {
       return null;
     }
 
-    System.out.println("task title : " + task.getTitle());
-    System.out.println("form title : " + form.getTitle());
     task.setTitle(form.getTitle());
     task.setStatus(form.getStatus());
     task.setDescription(form.getDescription());

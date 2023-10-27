@@ -15,8 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.mvcsecurityjpa.entity.Board;
 import com.example.mvcsecurityjpa.entity.Task;
 import com.example.mvcsecurityjpa.enums.Status;
-import com.example.mvcsecurityjpa.form.BoardEditForm;
-import com.example.mvcsecurityjpa.form.BoardForm;
+import com.example.mvcsecurityjpa.form.board.BoardEditForm;
+import com.example.mvcsecurityjpa.form.board.BoardCreationForm;
 import com.example.mvcsecurityjpa.service.board.BoardFindService;
 import com.example.mvcsecurityjpa.service.board.BoardService;
 import com.example.mvcsecurityjpa.service.task.TaskService;
@@ -82,13 +82,13 @@ public class BoardController {
   }
 
   @GetMapping("/board/new")
-  public String showBoardCreation(@ModelAttribute("form") BoardForm form) {
+  public String showBoardCreation(@ModelAttribute("form") BoardCreationForm form) {
     return "board/board-creation";
   }
 
 
   @PostMapping("/board/new")
-  public String createBoard(@Valid @ModelAttribute("form") BoardForm form, RedirectAttributes redirectAttributes) {
+  public String createBoard(@Valid @ModelAttribute("form") BoardCreationForm form, RedirectAttributes redirectAttributes) {
 
     form.setUser(authenticationHelper.getCurrentUser());
     Long boardId = boardService.save(form).getId();
@@ -120,8 +120,8 @@ public class BoardController {
       return "board/board-edit";
     }
 
-    form.setId(id);
-    boardService.changeTitle(form);
+    form.setBoardId(id);
+    boardService.update(form);
 
     redirectAttributes.addAttribute("id", id);
     return "redirect:/boards/{id}";
@@ -130,8 +130,13 @@ public class BoardController {
 
   @PostMapping("/boards/{id}/delete")
   public String DeleteBoard(@PathVariable Long id) {
-    boardService.deleteBoard(id);
-    return "redirect:/boards";
+    try {
+      boardService.deleteBoard(id);
+      return "redirect:/boards";
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return "redirect:/boards";
+    }
   }
 
 

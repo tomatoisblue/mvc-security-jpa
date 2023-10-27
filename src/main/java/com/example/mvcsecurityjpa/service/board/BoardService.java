@@ -6,10 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.mvcsecurityjpa.entity.Board;
-import com.example.mvcsecurityjpa.form.BoardEditForm;
-import com.example.mvcsecurityjpa.form.BoardForm;
+import com.example.mvcsecurityjpa.form.board.BoardEditForm;
+import com.example.mvcsecurityjpa.form.board.BoardCreationForm;
 import com.example.mvcsecurityjpa.repository.BoardRepository;
-import com.example.mvcsecurityjpa.service.task.TaskService;
 
 /**
  * BoardService
@@ -22,14 +21,16 @@ public class BoardService {
     this.boardRepository = boardRepository;
   }
 
-  public Board save(BoardForm form) {
+  public Board save(BoardCreationForm form) {
+    form.getTitle().strip();
     Board board = new Board(form.getTitle(), form.getUser());
 
     return boardRepository.save(board);
   }
 
   public Board update(BoardEditForm form) {
-    Optional<Board> optionalBoard = boardRepository.findById(form.getId());
+    form.getTitle().strip();
+    Optional<Board> optionalBoard = boardRepository.findById(form.getBoardId());
     if (optionalBoard.isEmpty()) {
       return null;
     }
@@ -39,40 +40,26 @@ public class BoardService {
     return boardRepository.save(board);
   }
 
-  // public Board findByBoardId(Long boardId) {
-  //   Optional<Board> optionalBoard = boardRepository.findById(boardId);
-  //   if(optionalBoard.isPresent()) {
-  //     return optionalBoard.get();
+  public List<Board> findAllByUserId(Long boardId) {
+    return boardRepository.findAllByUserId(boardId);
+  }
+
+  // public void changeTitle(BoardEditForm form) {
+  //   Optional<Board> optionalBoard = boardRepository.findById(form.getBoardId());
+  //   if (optionalBoard.isEmpty()) {
+  //     return;
   //   }
-  //   return null;
+
+  //   Board board = optionalBoard.get();
+  //   board.setTitle(form.getTitle());
+  //   boardRepository.save(board);
   // }
-
-  public List<Board> findAllByUserId(Long id) {
-    return boardRepository.findAllByUserId(id);
-  }
-
-
-  public void changeTitle(BoardEditForm form) {
-    Optional<Board> optionalBoard = boardRepository.findById(form.getId());
-    if (optionalBoard.isEmpty()) {
-      return;
-    }
-
-    Board board = optionalBoard.get();
-    board.setTitle(form.getTitle());
-    boardRepository.save(board);
-  }
 
   public void deleteBoard(Long boardId) {
     Optional<Board> optionalBoard = boardRepository.findById(boardId);
     if (optionalBoard.isEmpty()) {
       return;
     }
-
-    // if (board.isTasksExist()) {
-    //   taskService.deleteAllByBoardId(boardId);
-    // }
-
     boardRepository.delete(optionalBoard.get());
   }
 }

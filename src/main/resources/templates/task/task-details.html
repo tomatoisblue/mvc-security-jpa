@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="common/head :: head-content">
     <title th:text="${task.getTitle()}"></title>
 </head>
-
 <body>
+    <header th:replace="common/header :: header"></header>
     <main class="main">
         <a th:href="@{'/boards/' + ${task.getBoard().getId()}}"><span>ボードに戻る</span></a>
         <div>

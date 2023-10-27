@@ -1,4 +1,4 @@
-package com.example.mvcsecurityjpa.form;
+package com.example.mvcsecurityjpa.form.user;
 
 import com.example.mvcsecurityjpa.annotation.UniqueEmail;
 import com.example.mvcsecurityjpa.annotation.UniqueUsername;
@@ -12,9 +12,9 @@ import jakarta.validation.constraints.Size;
 
 
 /**
- * UserRegistrationForm
+ * BaseUserForm
  */
-public class UserRegistrationForm {
+public class BaseUserForm {
 
   @Size(min = 4, max = 20)
   @Pattern(regexp = "^[\\p{Alnum}-_]{4,20}$", message = "ユーザーネームには半角の英数字とアンダースコア(_)、ハイフン(-)が使用できます")

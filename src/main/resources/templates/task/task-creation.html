@@ -1,12 +1,11 @@
-<!-- <!DOCTYPE html> -->
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>新規タスク</title>
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="common/head :: head-content">
+		<title>新規タスク</title>
 </head>
-
 <body>
+    <header th:replace="common/header :: header"></header>
     <main class="main">
     	<form class="form" th:action="@{/tasks/} + ${boardId}" method="post" th:object="${form}">
     		<h1 class="form__title">新規タスク</h1>

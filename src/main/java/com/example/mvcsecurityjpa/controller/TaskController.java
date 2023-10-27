@@ -11,8 +11,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.mvcsecurityjpa.entity.Task;
 import com.example.mvcsecurityjpa.enums.Status;
-import com.example.mvcsecurityjpa.form.TaskEditForm;
-import com.example.mvcsecurityjpa.form.TaskForm;
+import com.example.mvcsecurityjpa.form.task.TaskEditForm;
+import com.example.mvcsecurityjpa.form.task.TaskCreationForm;
 import com.example.mvcsecurityjpa.helper.AuthenticationHelper;
 import com.example.mvcsecurityjpa.helper.BoardPermissionHelper;
 import com.example.mvcsecurityjpa.helper.TaskPermissionHelper;
@@ -56,7 +56,7 @@ public class TaskController {
   }
 
   @GetMapping("/tasks/{boardId}/new")
-  public String showTaskCreation(@ModelAttribute TaskForm form, @PathVariable Long boardId, Model model) {
+  public String showTaskCreation(@ModelAttribute TaskCreationForm form, @PathVariable Long boardId, Model model) {
     if (!boardPermissionHelper.isOwner(boardId)) {
       return "redirect:/boards";
     }
@@ -68,7 +68,7 @@ public class TaskController {
   }
 
   @PostMapping("/tasks/{boardId}")
-  public String createTask(@Valid @ModelAttribute TaskForm form, BindingResult result, @PathVariable Long boardId, Model model, RedirectAttributes redirectAttributes) {
+  public String createTask(@Valid @ModelAttribute TaskCreationForm form, BindingResult result, @PathVariable Long boardId, Model model, RedirectAttributes redirectAttributes) {
     if (!boardPermissionHelper.isOwner(boardId)) {
       return "redirect:/boards";
     }
@@ -103,7 +103,7 @@ public class TaskController {
       return "redirect:/boards";
     }
 
-    form.setId(task.getId());
+    form.setTaskId(task.getId());
     form.setTitle(task.getTitle());
     form.setStatus(task.getStatus());
     form.setDescription(task.getDescription());
