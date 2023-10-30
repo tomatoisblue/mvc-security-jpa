@@ -3,13 +3,14 @@ package com.example.mvcsecurityjpa.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.mvcsecurityjpa.entity.Board;
@@ -29,7 +30,8 @@ import jakarta.validation.Valid;
 /**
  * BoardController
  */
-@Controller
+@RestController
+// @RequestMapping("/api/v1")
 public class BoardController {
   private BoardService boardService;
   private BoardFindService boardFindService;

@@ -41,6 +41,15 @@ public class BaseUserForm {
     return password.equals(confirmPassword);
   }
 
+  @Override
+  public String toString() {
+    return String.format("username: %s\nemail: %s\npassword: %s\nconfirmPassword: %s",
+      username,
+      email,
+      password,
+      confirmPassword);
+  }
+
   /*
    * Getters and Setters
    */
