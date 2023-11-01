@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
  * SecurityConfig
  */
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
 
   @Bean
