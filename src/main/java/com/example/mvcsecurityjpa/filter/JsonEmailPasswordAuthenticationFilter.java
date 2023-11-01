@@ -1,6 +1,7 @@
 package com.example.mvcsecurityjpa.filter;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -9,9 +10,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.ServletException;
@@ -27,9 +32,32 @@ public class JsonEmailPasswordAuthenticationFilter extends AbstractAuthenticatio
   private String emailParameter = "email";
   private String passwordParameter = "password";
 
+
   public JsonEmailPasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
     super(new AntPathRequestMatcher("/login", "POST"));
     this.setAuthenticationManager(authenticationManager);
+
+
+    // Set JWT Token on header When Authentication successed
+    Date issuedAt = new Date();
+    this.setAuthenticationSuccessHandler((req, res, auth) -> {
+      System.out.println("AUTHENTICATION SUCCESS!");
+      String username = auth.getName();
+
+      String token = JWT.create()
+                      .withIssuer("tomatoisblue.net")
+                      .withIssuedAt(issuedAt)
+                      .withExpiresAt(new Date(issuedAt.getTime() + 1000 * 60 * 60))
+                      .withClaim("username", username)
+                      .withClaim("role", auth.getAuthorities().iterator().next().toString())
+                      .sign(Algorithm.HMAC256("secret"));
+      System.out.println("JWT : " + token);
+      res.setHeader("X-AUTH-TOKEN", token);
+      res.setStatus(HttpServletResponse.SC_OK);
+    });
+
+    // Set 401 on header When Authentication Failed
+    this.setAuthenticationFailureHandler((req, res, auth) -> res.setStatus(HttpServletResponse.SC_UNAUTHORIZED));
   }
 
 
@@ -74,6 +102,6 @@ public class JsonEmailPasswordAuthenticationFilter extends AbstractAuthenticatio
     authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
 
     return this.getAuthenticationManager().authenticate(authRequest);
-  }
 
+  }
 }

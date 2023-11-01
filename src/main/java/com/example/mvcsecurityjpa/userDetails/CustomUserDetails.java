@@ -8,6 +8,8 @@ import com.example.mvcsecurityjpa.entity.User;
  * CustomUserDetails
  */
 public interface CustomUserDetails extends UserDetails {
+
+
   public Long getId();
 
   public User getUser();
