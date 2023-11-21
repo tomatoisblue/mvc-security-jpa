@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 import com.example.mvcsecurityjpa.exception.EmailNotFoundException;
+import com.example.mvcsecurityjpa.userDetails.CustomUserDetails;
 
 /**
  * CustomAuthenticationProvider
@@ -41,8 +42,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     }
 
     Authentication authenticated = new UsernamePasswordAuthenticationToken(
-                                          userDetails,
-                                          plainPassword,
+                                          (CustomUserDetails) userDetails,
+                                          null,
                                           userDetails.getAuthorities());
 
     return authenticated;

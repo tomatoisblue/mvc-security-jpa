@@ -5,13 +5,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.example.mvcsecurityjpa.jwt.JwtUtil;
+import com.example.mvcsecurityjpa.service.user.UserFindService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.ServletException;
@@ -27,11 +32,28 @@ public class JsonEmailPasswordAuthenticationFilter extends AbstractAuthenticatio
   private String emailParameter = "email";
   private String passwordParameter = "password";
 
-  public JsonEmailPasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
+  public JsonEmailPasswordAuthenticationFilter(AuthenticationManager authenticationManager,
+                                               JwtUtil jwtUtil,
+                                               UserFindService userFindService) {
     super(new AntPathRequestMatcher("/login", "POST"));
     this.setAuthenticationManager(authenticationManager);
-  }
 
+    // Set JWT Token on header When Authentication successed
+    this.setAuthenticationSuccessHandler((req, res, auth) -> {
+      System.out.println("AUTHENTICATION SUCCESS!");
+      String username = auth.getName();
+      String role = auth.getAuthorities().iterator().next().toString();
+
+      Long userId = userFindService.findByUsername(username).getId();
+
+      String token = jwtUtil.generateToken(userId, username, role);
+      res.setHeader("X-AUTH-TOKEN", token);
+      res.setStatus(HttpServletResponse.SC_OK);
+    });
+
+    // Set 401 on header When Authentication Failed
+    this.setAuthenticationFailureHandler((req, res, auth) -> res.setStatus(HttpServletResponse.SC_UNAUTHORIZED));
+  }
 
   public String getEmailParameter() {
     return emailParameter;
@@ -75,5 +97,4 @@ public class JsonEmailPasswordAuthenticationFilter extends AbstractAuthenticatio
 
     return this.getAuthenticationManager().authenticate(authRequest);
   }
-
 }
